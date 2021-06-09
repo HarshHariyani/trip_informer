@@ -1,21 +1,19 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'Firebase.dart';
 
-FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-
-class logIn extends StatefulWidget {
-  @override
-  _loginState createState() => _loginState();
-}
+String email = '';
+String password = '';
 
 FirebaseL fl = FirebaseL();
 
-class _loginState extends State<logIn> {
-  String _email = '';
-  String _password = '';
+class SignUpE extends StatefulWidget {
+  @override
+  _SignUpEState createState() => _SignUpEState();
+}
+
+class _SignUpEState extends State<SignUpE> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,28 +21,6 @@ class _loginState extends State<logIn> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Welcome back!',
-                    style: TextStyle(
-                      fontSize: 50.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    'Sign in to your account',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            ),
             Container(
               width: double.infinity,
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
@@ -70,7 +46,7 @@ class _loginState extends State<logIn> {
                     child: Center(
                       child: TextField(
                         onChanged: (text) {
-                          _email = text;
+                          email = text;
                         },
                         cursorWidth: 1.0,
                         decoration: InputDecoration(
@@ -109,7 +85,7 @@ class _loginState extends State<logIn> {
                     child: Center(
                       child: TextField(
                         onChanged: (text) {
-                          _password = text;
+                          password = text;
                         },
                         cursorWidth: 1.0,
                         decoration: InputDecoration(
@@ -129,34 +105,28 @@ class _loginState extends State<logIn> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(),
                 onPressed: () {
-                  fl.signInf(_email, _password).then((value) => {
-                        if (value == true)
-                          {
-                            Navigator.pushNamed(context, '/content'),
-                          }
-                      });
+                  fl.signUpf(email, password);
+                  Navigator.pushNamed(context, '/content');
                 },
-                child: Text('SignIn'),
+                child: Text('SignUp'),
               ),
             ),
             RichText(
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: 'Dont\'t have an account? ',
+                    text: 'Already have an account?',
                   ),
                   TextSpan(
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                      ),
-                      text: 'SignUp',
+                      style: TextStyle(decoration: TextDecoration.underline),
+                      text: ' SignIn',
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          Navigator.pushNamed(context, '/signup');
+                          Navigator.pushNamed(context, '/login');
                         })
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

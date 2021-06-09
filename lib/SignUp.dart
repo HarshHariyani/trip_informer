@@ -1,5 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'Firebase.dart';
 
 class signUp extends StatefulWidget {
   @override
@@ -7,8 +9,18 @@ class signUp extends StatefulWidget {
 }
 
 class _signUpState extends State<signUp> {
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
+    getCurrentUser().then(
+      (value) => {
+        if (value == 'content')
+          {Navigator.pushNamed(context, '/content')}
+        else if (value == 'signup')
+          {Navigator.defaultRouteName}
+      },
+    );
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -23,15 +35,19 @@ class _signUpState extends State<signUp> {
                 ),
               ),
               Container(
-                width: 300.0,
+                width: double.infinity,
+                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(),
-                  onPressed: () {},
-                  child: Text('signup with email'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/signupe');
+                  },
+                  child: Text('Signup With Email'),
                 ),
               ),
               Container(
-                width: 300.0,
+                width: double.infinity,
+                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.white,
@@ -68,14 +84,15 @@ class _signUpState extends State<signUp> {
                       text: 'Already have an account?',
                     ),
                     TextSpan(
-                        text: 'SignIn',
+                        style: TextStyle(decoration: TextDecoration.underline),
+                        text: ' SignIn',
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             Navigator.pushNamed(context, '/login');
                           })
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
