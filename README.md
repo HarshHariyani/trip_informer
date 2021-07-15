@@ -1,4 +1,4 @@
-# trip_manager
+# trip_informer
 
 A new Flutter project.
 
