@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:trip_manager/pages/Flights.dart';
 import 'package:trip_manager/pages/Explore.dart';
-import 'package:trip_manager/pages/Category.dart';
 import 'package:trip_manager/pages/Wishlist.dart';
-import 'Firebase.dart';
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'Firebase_U.dart';
 
 class Content extends StatefulWidget {
   @override
@@ -13,6 +11,7 @@ class Content extends StatefulWidget {
 }
 
 class _ContentState extends State<Content> {
+  FirebaseL fl = FirebaseL();
   Future<bool> _popUp() async {
     return (await showDialog(
       context: context,
@@ -28,58 +27,83 @@ class _ContentState extends State<Content> {
             onPressed: () => SystemNavigator.pop(),
             child: new Text('Yes'),
           ),
+          TextButton(
+              onPressed: () {
+                setState(() {
+                  fl.signout();
+                  Navigator.pushNamed(context, '/home');
+                });
+              },
+              child: Text('SignOut'))
         ],
       ),
     ));
   }
 
+  PageController _pageController = PageController();
+  List<Widget> _screen = [
+    Explore(),
+    Flights(),
+    WishList(),
+  ];
+  int _selectedIndex = 0;
+  void _ontap(int selectedIndex) {
+    setState(() {
+      _selectedIndex = selectedIndex;
+    });
+    _pageController.jumpToPage(selectedIndex);
+  }
+
   @override
   Widget build(BuildContext context) {
-    PageController _pageController = PageController();
-    List<Widget> _screen = [
-      Explore(),
-      Categorys(),
-      Flights(),
-      WishList(),
-    ];
-    void _ontap(int selectedIndex) {
-      _pageController.jumpToPage(selectedIndex);
-    }
-
     return WillPopScope(
       onWillPop: _popUp,
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
         home: Scaffold(
           appBar: AppBar(
             actions: [
-              GestureDetector(
-                onTap: () {
-                  signout();
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    _popUp();
+                  });
                 },
-                child: Icon(
-                  Icons.exit_to_app,
-                ),
+                icon: Icon(Icons.exit_to_app),
               )
             ],
-            title: Text('Finally'),
+            title: Text('Trip Informer'),
           ),
           body: PageView(
+            onPageChanged: (index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
             controller: _pageController,
             children: _screen,
           ),
-          bottomNavigationBar: ConvexAppBar(
-            style: TabStyle.react,
-            height: 45.0,
-            backgroundColor: Colors.black26,
-            activeColor: Colors.white,
+          bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            currentIndex: _selectedIndex,
+            onTap: (value) {
+              _ontap(value);
+            },
             items: [
-              TabItem(icon: Icons.explore, title: 'Explore'),
-              TabItem(icon: Icons.category, title: 'Category'),
-              TabItem(icon: Icons.flight, title: 'Flights'),
-              TabItem(icon: Icons.list, title: 'WishList'),
+              BottomNavigationBarItem(
+                label: 'Explore',
+                icon: Icon(Icons.explore),
+              ),
+              BottomNavigationBarItem(
+                label: 'Flights',
+                icon: Icon(Icons.flight),
+              ),
+              BottomNavigationBarItem(
+                label: 'WishList',
+                icon: Icon(Icons.list),
+              ),
             ],
-            onTap: _ontap,
           ),
         ),
       ),

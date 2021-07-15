@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'Firebase.dart';
+import 'Firebase_U.dart';
 
 String email = '';
 String password = '';
@@ -84,6 +83,7 @@ class _SignUpEState extends State<SignUpE> {
                     flex: 7,
                     child: Center(
                       child: TextField(
+                        obscureText: true,
                         onChanged: (text) {
                           password = text;
                         },

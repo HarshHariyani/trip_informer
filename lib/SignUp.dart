@@ -1,7 +1,6 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'Firebase.dart';
+import 'Firebase_U.dart';
 
 class signUp extends StatefulWidget {
   @override
@@ -52,20 +51,16 @@ class _signUpState extends State<signUp> {
                   style: ElevatedButton.styleFrom(
                     primary: Colors.white,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/login');
+                  },
                   child: Row(
                     children: [
-                      Expanded(
-                        flex: 1,
-                        child: Image(
-                          image: AssetImage('images/google.png'),
-                        ),
-                      ),
                       Expanded(
                         flex: 9,
                         child: Center(
                           child: Text(
-                            'SignUp with Gmail',
+                            'Login',
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
@@ -75,22 +70,6 @@ class _signUpState extends State<signUp> {
                       ),
                     ],
                   ),
-                ),
-              ),
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Already have an account?',
-                    ),
-                    TextSpan(
-                        style: TextStyle(decoration: TextDecoration.underline),
-                        text: ' SignIn',
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            Navigator.pushNamed(context, '/login');
-                          })
-                  ],
                 ),
               ),
             ],

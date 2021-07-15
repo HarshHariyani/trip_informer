@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class FirebaseL {
+  List<String> names = [];
   void signUpf(String email, String password) async {
     try {
       FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -23,11 +23,23 @@ class FirebaseL {
       return Future.value(false);
     }
   }
-}
 
-void signout() async {
-  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  await firebaseAuth.signOut();
+  void addNames(String s) {
+    names.add(s);
+  }
+
+  List<String> getNames() {
+    return names;
+  }
+
+  void clearL() {
+    names.clear();
+  }
+
+  void signout() async {
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    await firebaseAuth.signOut();
+  }
 }
 
 Future<String> getCurrentUser() async {

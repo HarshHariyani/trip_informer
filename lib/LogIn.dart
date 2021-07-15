@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'Firebase.dart';
+import 'Firebase_U.dart';
 
 FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
@@ -108,6 +107,7 @@ class _loginState extends State<logIn> {
                     flex: 7,
                     child: Center(
                       child: TextField(
+                        obscureText: true,
                         onChanged: (text) {
                           _password = text;
                         },
@@ -152,7 +152,7 @@ class _loginState extends State<logIn> {
                       text: 'SignUp',
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          Navigator.pushNamed(context, '/signup');
+                          Navigator.pushNamed(context, '/signupe');
                         })
                 ],
               ),

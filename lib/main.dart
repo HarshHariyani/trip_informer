@@ -1,11 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:trip_manager/Content.dart';
+import 'package:trip_manager/pages/Flights.dart';
 import 'SignUp.dart';
 import 'SignUp_Email.dart';
 import 'LogIn.dart';
-import 'Firebase.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,12 +19,20 @@ class Trip_Manager extends StatefulWidget {
 
 class _Trip_ManagerState extends State<Trip_Manager> {
   @override
+  void initState() {
+    // TODO: implement initState
+    Flights().getAuth();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      initialRoute: '/',
+      initialRoute: '/home',
       routes: {
-        '/': (context) => signUp(),
+        '/home': (context) => signUp(),
         '/login': (context) => logIn(),
         '/signupe': (context) => SignUpE(),
         '/content': (context) => Content(),
