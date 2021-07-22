@@ -35,7 +35,7 @@ class _FlightsState extends State<Flights> {
     String ttype = _getToken['token_type'];
     String atoken = _getToken['access_token'];
     var url = Uri.parse(
-        'https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=$ori&destinationLocationCode=$des&departureDate=$date&adults=1&nonStop=true&currencyCode=INR');
+        'https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=$ori&destinationLocationCode=$des&departureDate=$date&adults=1&currencyCode=INR');
 
     var request =
         await http.get(url, headers: {'Authorization': ttype + ' ' + atoken});
@@ -355,7 +355,8 @@ class _TicketViewState extends State<TicketView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            data[index]['lastTicketingDate'],
+                            "LastDate Booking " +
+                                data[index]['lastTicketingDate'],
                             style: TextStyle(fontSize: 12, color: Colors.grey),
                           ),
                           Row(
